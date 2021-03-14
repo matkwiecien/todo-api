@@ -4,7 +4,10 @@ const request = require('supertest');
 const app = require('../../src/app');
 class World {
     constructor() {
-        this.req = request(app);
+        this.database = {
+            todos: []
+        }
+        this.req = request(app(this.database));
         this.response = null
     }
 
@@ -12,6 +15,11 @@ class World {
        return this.req.get(url).then((res) => {
            this.response = res
        });
+    }
+
+
+    insert(tableName, entry) {
+        this.database[tableName].push(entry)
     }
 }
 

@@ -1,6 +1,15 @@
 // features/support/steps.js
-const { When, Then } = require("@cucumber/cucumber");
+const { Given, When, Then } = require("@cucumber/cucumber");
 const assert = require("assert").strict;
+
+Given("I have following todos:", function(todos) {
+    todos.hashes().forEach((todo) => {
+        this.insert("todos", {
+            id: parseInt(todo.Id),
+            description: todo.Description
+        })
+    })
+})
 
 When("I list task", function () {
     return this.get("/todos");
