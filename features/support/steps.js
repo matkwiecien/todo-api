@@ -15,6 +15,11 @@ When("I list task", function () {
     return this.get("/todos");
 });
 
+When("I post following todo:", function (request) {
+    return this.post("/todos", JSON.parse(request));
+});
+
+
 Then("the response should be:", function (response) {
     assert.deepEqual(JSON.parse(response), this.response.body);
 });

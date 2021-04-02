@@ -7,5 +7,11 @@ module.exports = ({repository, decorators}) => {
         res.json(decorators.decorateTodosWithHATEOS(todos))
     })
 
+    router.post('/', (req, res) => {
+        const todo = repository.addTodo(req.body.description)
+        res.json(decorators.decorateTodoWithHATEOS(todo))
+    })
+
+
     return router;
 }

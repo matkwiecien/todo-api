@@ -41,3 +41,23 @@ Feature: Todos CRUD
       }
     }
     """
+
+  Scenario: Add todo to list
+    When I post following todo:
+    """
+    {
+      "description": "Do exercises"
+    }
+    """
+    Then the response should be:
+    """
+    {
+      "id": 1,
+      "description": "Do exercises",
+      "_links": {
+        "self": {
+          "href": "http://localhost:9000/todos/1"
+        }
+      }
+    }
+    """

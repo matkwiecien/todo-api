@@ -1,10 +1,12 @@
 const todosRepository = {
     database: null,
     addTodo(description) {
-        this.database.todos.push({
-            id: todos.length + 1,
+        const todo = {
+            id: this.database.todos.length + 1,
             description
-        })
+        }
+        this.database.todos.push(todo)
+        return todo;
     },
 
     getTodos() {

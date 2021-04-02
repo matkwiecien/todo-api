@@ -1,10 +1,13 @@
 const express = require('express')
+const bodyParser = require('body-parser')
 
 const todosApp = require('./todos')
 
 module.exports = (database) => {
     const app = express()
-    const port = 9000
+    const port = 9003
+
+    app.use(bodyParser.json())
 
     app.use('/todos', todosApp(database))
 
@@ -14,3 +17,4 @@ module.exports = (database) => {
 
     return app;
 };
+

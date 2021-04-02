@@ -1,26 +1,38 @@
-const { setWorldConstructor } = require("@cucumber/cucumber");
+const { setWorldConstructor, After } = require("@cucumber/cucumber");
 const request = require('supertest');
 
 const app = require('../../src/app');
+
+let database = {
+    todos: []
+}
+
+const req = request(app(database));
+
 class World {
     constructor() {
-        this.database = {
-            todos: []
-        }
-        this.req = request(app(this.database));
         this.response = null
     }
 
     async get(url) {
-       return this.req.get(url).then((res) => {
+       return req.get(url).then((res) => {
            this.response = res
        });
     }
 
+    async post(url, body) {
+        return req.post(url).send(body).then((res) => {
+            this.response = res
+        });
+    }
 
     insert(tableName, entry) {
-        this.database[tableName].push(entry)
+        database[tableName].push(entry)
     }
 }
 
 setWorldConstructor(World);
+
+After(() => {
+    database.todos = []
+})
